@@ -1,6 +1,7 @@
 package player
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/faiface/beep/speaker"
@@ -14,7 +15,7 @@ func (p *Player) Fforward() {
 		newPos = p.streamer.Len() - 1
 	}
 	if err := p.streamer.Seek(newPos); err != nil {
-		report(err)
+		fmt.Println(err)
 	}
 	speaker.Unlock()
 }
@@ -27,7 +28,7 @@ func (p *Player) Rewind() {
 		newPos = 0
 	}
 	if err := p.streamer.Seek(newPos); err != nil {
-		report(err)
+		fmt.Println(err)
 	}
 	speaker.Unlock()
 }
@@ -43,27 +44,6 @@ func (p *Player) Cue() {
 		p.streamer.Seek(p.cuePoint)
 		speaker.Unlock()
 	}
-}
-
-// Volup increase volume of music
-func (p *Player) Volup() {
-	speaker.Lock()
-	p.volume.Volume += 0.1
-	speaker.Unlock()
-}
-
-// Voldown decrease volume of music
-func (p *Player) Voldown() {
-	speaker.Lock()
-	p.volume.Volume -= 0.1
-	speaker.Unlock()
-}
-
-// SetVol set volume
-func (p *Player) SetVol(volume float64) {
-	speaker.Lock()
-	p.volume.Volume = volume
-	speaker.Unlock()
 }
 
 // GainUp increase gain of music
@@ -108,16 +88,16 @@ func (p *Player) SetSpd(speed float64) {
 	speaker.Unlock()
 }
 
-// Cutoffup is
-func (p *Player) Cutoffup() {
-	speaker.Lock()
-	p.filter.Freq += 100
-	speaker.Unlock()
-}
+// // Cutoffup is
+// func (p *Player) Cutoffup() {
+// 	speaker.Lock()
+// 	p.filter.Freq += 100
+// 	speaker.Unlock()
+// }
 
-// Cutoffdown is
-func (p *Player) Cutoffdown() {
-	speaker.Lock()
-	p.filter.Freq -= 100
-	speaker.Unlock()
-}
+// // Cutoffdown is
+// func (p *Player) Cutoffdown() {
+// 	speaker.Lock()
+// 	p.filter.Freq -= 100
+// 	speaker.Unlock()
+// }
